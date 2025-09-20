@@ -1,0 +1,18 @@
+Good day, students. Today, we will be delving into the Developer Guide for Amazon CodeCatalyst. This guide provides valuable information on developing workflow actions for Amazon CodeCatalyst. Let's explore the key sections of this document.
+
+Firstly, it is important to note that all rights are reserved by Amazon Web Services, Inc. and/or its affiliates. Amazon's trademarks and trade dress should not be used in connection with any product or service that is not Amazon's, to avoid confusion among customers or any disparagement or discredit to Amazon.
+
+The Developer Guide covers essential topics such as getting started with action development, testing and publishing custom actions, and custom actions concepts. It provides detailed steps on how to set up your project and development environment, install tools and packages, and initialize your action project.
+
+Some key steps outlined in the guide include:
+1. Setting up your project and Dev Environment
+2. Installing necessary tools and packages
+3. Initializing your action project
+4. Bootstrapping the action code
+5. Building the package locally
+6. Testing the action, including adding unit tests
+7. Publishing the action
+
+Furthermore, the guide also discusses working with custom actions, setting up your project on a local machine, testing an action, and adding unit tests. These sections provide a comprehensive overview of the processes involved in developing and testing custom actions for Amazon CodeCatalyst.
+
+In conclusion, the Developer Guide for Amazon CodeCatalyst is a valuable resource for developers looking to create custom actions for this platform. By following the outlined steps and best practices, developers can effectively build and test their custom actions. Thank you for your attention, and let's dive into the nuances of developing workflow actions with Amazon CodeCatalyst.
