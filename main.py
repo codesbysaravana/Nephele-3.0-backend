@@ -20,8 +20,8 @@ from openai import OpenAI
 # ---------------- Internal services ----------------
 from services.attendance import router, lifespan
 from services.teaching import TeachingAssistant, Config
-#from services.wakeword import detect_wakeword_whisper, chat_with_openai_messages, speak
- 
+# from services.wakeword import detect_wakeword_whisper, chat_with_openai_messages, speak
+
 # ---------------- Logging ----------------
 logging.basicConfig(level=logging.INFO)
 
@@ -35,7 +35,7 @@ config.audio_dir = AUDIO_FILES_DIR
 assistant = TeachingAssistant(config)
 
 # ---------------- FastAPI App ----------------
-app = FastAPI(lifespan=lifespan)
+app = FastAPI(title="Nephele 3.0 Central Backend", lifespan=lifespan)
 
 # ---------------- CORS ----------------
 app.add_middleware(
@@ -270,57 +270,6 @@ async def end_voice_conversation(uid: str):
         del voice_conversations[uid]
         return {"message": "Conversation ended"}
     raise HTTPException(status_code=404, detail="Conversation not found")
-
-
-""" 
-# ======================================================
-# INTERACTION AND WAKE WORRD
-# ======================================================
-
-conversations = {}
-
-
-@app.post("/wakeword")
-async def wakeword(audio: UploadFile = File(...)):
-    # Save to temp file
-    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
-    tmp.write(await audio.read())
-    tmp.close()
-    detected = detect_wakeword_whisper(tmp.name)
-    os.unlink(tmp.name)
-    return {"wake_detected": detected}
-
-@app.post("/voice/transcribe")
-async def transcribe(audio: UploadFile = File(...)):
-    tmp = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
-    tmp.write(await audio.read())
-    tmp.close()
-    from wakeword import whisper_model
-    result = whisper_model.transcribe(tmp.name)
-    os.unlink(tmp.name)
-    return {"text": result.get("text", "")}
-
-@app.post("/voice/chat")
-async def voice_chat(payload: dict):
-    uid = payload.get("uid")
-    msg = payload.get("message")
-    if uid not in conversations:
-        conversations[uid] = [{"role": "system", "content": "You are Nephele, a friendly AI assistant."}]
-    conversations[uid].append({"role": "user", "content": msg})
-    reply = chat_with_openai_messages(conversations[uid])
-    conversations[uid].append({"role": "assistant", "content": reply})
-    # Send TTS audio back to frontend
-    tmp_file = speak(reply, use_openai=True)
-    from fastapi.responses import FileResponse
-    return FileResponse(tmp_file, media_type="audio/mpeg")
-
-@app.get("/voice/latest_text")
-async def latest_text(uid: str):
-    if uid in conversations and len(conversations[uid]) > 0:
-        return {"text": conversations[uid][-1]["content"]}
-    return {"text": ""}
-
- """
 
 # ======================================================
 # SERVER ENTRYPOINT
